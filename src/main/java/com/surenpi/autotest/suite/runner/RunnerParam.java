@@ -39,4 +39,7 @@ public class RunnerParam
 	
 	@Parameter(names = "-download-dir", description = "指定下载后的目录")
 	private String downloadDir;
+	
+	@Parameter(names = "-gui", description = "启动GUI界面")
+	private boolean isGuiMode = false;
 }
