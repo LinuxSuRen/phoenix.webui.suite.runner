@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<suren:suite xmlns:suren="http://suite.surenpi.com"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://suite.surenpi.com
+		http://surenpi.com/schema/suite/autotest.web.framework.suite.xsd "
+	pageConfig="baidu.xml"
+	afterSleep="3000">
+	<suren:page class="com.surenpi.autotest.suite.runner.demo.BaiduHomePage">
+		<suren:actions>
+			<suren:action name="fillNotBlankValue" field="kw"/>
+		</suren:actions>
+	</suren:page>
+</suren:suite>

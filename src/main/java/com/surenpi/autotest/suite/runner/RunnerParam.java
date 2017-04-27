@@ -29,17 +29,17 @@ import com.beust.jcommander.Parameter;
 public class RunnerParam
 {
 	@Parameter(names = "-list", description = "列出所有的测试套件")
-	private boolean listRunners = false;
+	public boolean listRunners = false;
 	
 	@Parameter(names = "-runners", description = "指定运行的测试套件列表")
-	private List<String> runners = new ArrayList<String>();
+	public List<String> runners = new ArrayList<String>();
 	
 	@Parameter(names = "-download-driver", description = "指定要下载的浏览器驱动以及版本号，例如：chrome.57")
-	private String downloadDriver;
+	public String downloadDriver;
 	
 	@Parameter(names = "-download-dir", description = "指定下载后的目录")
-	private String downloadDir;
+	public String downloadDir;
 	
 	@Parameter(names = "-gui", description = "启动GUI界面")
-	private boolean isGuiMode = false;
+	public boolean isGuiMode = false;
 }
