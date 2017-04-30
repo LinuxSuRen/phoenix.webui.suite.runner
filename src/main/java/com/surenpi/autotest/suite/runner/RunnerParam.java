@@ -34,6 +34,9 @@ public class RunnerParam
 	@Parameter(names = "-runners", description = "指定运行的测试套件列表")
 	public List<String> runners = new ArrayList<String>();
 	
+	@Parameter(names = "-download", description = "下载驱动")
+	public boolean download;
+	
 	@Parameter(names = "-download-driver", description = "指定要下载的浏览器驱动以及版本号，例如：chrome.57")
 	public String downloadDriver;
 	
@@ -42,4 +45,7 @@ public class RunnerParam
 	
 	@Parameter(names = "-gui", description = "启动GUI界面")
 	public boolean isGuiMode = false;
+	
+	@Parameter(names = "-help", description = "查看命令参数说明")
+	public boolean isHelp = false;
 }
