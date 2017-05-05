@@ -24,6 +24,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.UnsupportedEncodingException;
 import java.net.URL;
 import java.net.URLDecoder;
 import java.util.ArrayList;
@@ -37,6 +38,7 @@ import javax.swing.JPanel;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.io.IOUtils;
 import org.dom4j.DocumentException;
+import org.springframework.shell.Bootstrap;
 import org.xml.sax.SAXException;
 
 import com.beust.jcommander.JCommander;
@@ -51,10 +53,54 @@ public class SuiteRunnerLuancher
 	public static void main(String[] args) throws IOException
 	{
 		RunnerParam param = new RunnerParam();
-		
-		new JCommander(param, args);
+		JCommander commander = new JCommander(param, args);
 		
 		List<URL> urlList = new ArrayList<URL>();
+		runnerRead(urlList);
+		
+		if(param.listRunners)
+		{
+			System.out.println(urlList);
+		}
+		
+		if(param.interactive)
+		{
+			String[] interArgs = new String[args.length - 1];
+			for(int i = 0; i < interArgs.length; i++)
+			{
+				if(!"-inter".equals(args[i]))
+				{
+					interArgs[i] = args[i];
+				}
+			}
+			
+			Bootstrap.main(interArgs);
+		}
+		else if(param.isGuiMode)
+		{
+			gui(urlList);
+		}
+		else if(param.download)
+		{
+		}
+		else
+		{
+			param.isHelp = true;
+		}
+		
+		if(param.isHelp)
+		{
+			commander.usage();
+		}
+	}
+	
+	/**
+	 * @param urlList
+	 * @throws IOException 
+	 * @throws UnsupportedEncodingException 
+	 */
+	private static void runnerRead(List<URL> urlList) throws UnsupportedEncodingException, IOException
+	{
 		InputStream inputA = SuiteRunnerLuancher.class.getResourceAsStream("/");
 		if(inputA == null)
 		{
@@ -85,10 +131,8 @@ public class SuiteRunnerLuancher
 				}
 			}
 		}
-		
-		gui(urlList);
 	}
-	
+
 	private static void gui(List<URL> urlList)
 	{
 		JFrame frame = new JFrame("PhoenixFramework");

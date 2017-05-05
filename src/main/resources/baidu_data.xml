@@ -5,7 +5,7 @@
 		http://surenpi.com/schema/datasource/autotest.web.framework.datasource.xsd ">
 	<suren:dataSource pageClass="com.surenpi.autotest.suite.runner.demo.BaiduHomePage">
 		<suren:page>
-			<suren:field data="surenpi.com" name="kw" />
+			<suren:field data="素人派" name="kw" />
 		</suren:page>
 	</suren:dataSource>
 </suren:dataSources>

@@ -46,6 +46,9 @@ public class RunnerParam
 	@Parameter(names = "-gui", description = "启动GUI界面")
 	public boolean isGuiMode = false;
 	
+	@Parameter(names = "-inter", description = "使用交换命令")
+	public boolean interactive = false;
+	
 	@Parameter(names = "-help", description = "查看命令参数说明")
 	public boolean isHelp = false;
 }
