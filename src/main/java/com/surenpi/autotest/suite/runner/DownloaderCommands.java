@@ -16,9 +16,17 @@
 
 package com.surenpi.autotest.suite.runner;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
+
 import org.springframework.shell.core.CommandMarker;
 import org.springframework.shell.core.annotation.CliCommand;
+import org.springframework.shell.core.annotation.CliOption;
 import org.springframework.stereotype.Component;
+import org.suren.autotest.webdriver.downloader.DriverDownloader;
+import org.suren.autotest.webdriver.downloader.DriverMapping;
 
 /**
  * @author suren
@@ -31,5 +39,32 @@ public class DownloaderCommands implements CommandMarker
 	public String demo()
 	{
 		return "demo";
+	}
+	
+	@CliCommand(value = {"download"}, help = "下载驱动")
+	public String download(
+			@CliOption(key = {"browser"}, mandatory = true, help = "浏览器") final String browser,
+			@CliOption(key = {"version"}, mandatory = true, help = "版本") final String ver,
+			@CliOption(key = {"os"}, specifiedDefaultValue = "win32", help = "操作系统：win32、linux、mac") final String os,
+			@CliOption(key = {"arch"}, specifiedDefaultValue = "32", help = "64或者32位") final String arch)
+					throws FileNotFoundException, MalformedURLException, IOException
+	{
+		String url = url(browser, ver, os, arch);
+		System.out.println("找到驱动地址" + url);
+		
+		return new DriverDownloader().getLocalFilePath(new URL(url));
+	}
+	
+	@CliCommand(value = {"url"}, help = "获取驱动地址")
+	public String url(
+			@CliOption(key = {"browser"}, mandatory = true, help = "浏览器") final String browser,
+			@CliOption(key = {"version"}, mandatory = true, help = "版本") final String ver,
+			@CliOption(key = {"os"}, specifiedDefaultValue = "win32", help = "操作系统：win32、linux、mac") final String os,
+			@CliOption(key = {"arch"}, specifiedDefaultValue = "32", help = "64或者32位") final String arch)
+	{
+		DriverMapping driverMapping = new DriverMapping();
+		driverMapping.init();
+		String url = driverMapping.getUrl(browser, ver, os, arch);
+		return url;
 	}
 }
