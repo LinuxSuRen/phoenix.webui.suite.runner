@@ -37,7 +37,7 @@ import java.util.Map;
 import org.dom4j.DocumentException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.suren.autotest.web.framework.settings.SettingUtil;
+import org.suren.autotest.web.framework.settings.Phoenix;
 import org.suren.autotest.web.framework.util.StringUtils;
 import org.suren.autotest.web.framework.util.ThreadUtil;
 import org.suren.autotest.web.framework.validation.Validation;
@@ -326,7 +326,7 @@ public class SuiteRunner
 		}
 		
 		URL suitePathUrl = suite.getPathUrl();
-		try(SettingUtil settingUtil = new SettingUtil())
+		try(Phoenix settingUtil = new Phoenix())
 		{
 			String[] xmlConfArray = xmlConfPath.split(",");
 			for(String xmlConf : xmlConfArray)
@@ -378,7 +378,7 @@ public class SuiteRunner
 	 * @throws IllegalAccessException
 	 * @throws InterruptedException
 	 */
-	private void runSuiteWithData(SettingUtil settingUtil, int row, List<SuitePage> pageList)
+	private void runSuiteWithData(Phoenix settingUtil, int row, List<SuitePage> pageList)
 			throws SecurityException, IllegalArgumentException, IllegalAccessException, InterruptedException
 	{
 		
@@ -450,7 +450,7 @@ public class SuiteRunner
 	 * @throws IllegalAccessException 
 	 * @throws IllegalArgumentException 
 	 */
-	private void performActionList(final Page page, List<SuiteAction> actionList, SettingUtil settingUtil)
+	private void performActionList(final Page page, List<SuiteAction> actionList, Phoenix settingUtil)
 			throws SecurityException, InterruptedException,
 			IllegalArgumentException, IllegalAccessException
 	{
@@ -532,11 +532,11 @@ public class SuiteRunner
 		private SuiteAction	action;
 		private Field	pageField;
 		private Page	targetPage;
-		private SettingUtil	settingUtil;
+		private Phoenix	settingUtil;
 		private ProgressInfo<String>	progressInfo;
 
 		private PerformAction(SuiteAction action, Field pageField, Page targetPage,
-				SettingUtil settingUtil, ProgressInfo<String> progressInfo)
+				Phoenix settingUtil, ProgressInfo<String> progressInfo)
 		{
 			this.action = action;
 			this.pageField = pageField;
@@ -591,7 +591,7 @@ public class SuiteRunner
 	 * @throws IllegalArgumentException 
 	 */
 	private String performAction(SuiteAction action, Field pageField, 
-			Page page, SettingUtil settingUtil)
+			Page page, Phoenix settingUtil)
 			throws IllegalArgumentException, IllegalAccessException
 	{
 		String name = action.getName();
@@ -695,7 +695,8 @@ public class SuiteRunner
 				Selector randomSelector = getFieldObj(Selector.class, pageField, page);
 				if(randomSelector != null)
 				{
-					actionResult = Boolean.toString(randomSelector.randomSelect());
+					randomSelector.randomSelect();
+//					actionResult = Boolean.toString(randomSelector.randomSelect());
 				}
 				break;
 			case "hover":
@@ -754,12 +755,12 @@ public class SuiteRunner
 					{
 						if(paramList.size() > 0)
 						{
-							invokeM = invokeClazz.getMethod(invokeMethod, SettingUtil.class, String[].class);
+							invokeM = invokeClazz.getMethod(invokeMethod, Phoenix.class, String[].class);
 							invokeM.invoke(null, settingUtil, paramList.toArray(new String[]{}));
 						}
 						else
 						{
-							invokeM = invokeClazz.getMethod(invokeMethod, SettingUtil.class);
+							invokeM = invokeClazz.getMethod(invokeMethod, Phoenix.class);
 							invokeM.invoke(null, settingUtil);
 						}
 					}
