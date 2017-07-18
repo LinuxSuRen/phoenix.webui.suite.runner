@@ -38,7 +38,6 @@ import javax.swing.JPanel;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.io.IOUtils;
 import org.dom4j.DocumentException;
-import org.springframework.shell.Bootstrap;
 import org.xml.sax.SAXException;
 
 import com.beust.jcommander.JCommander;
@@ -74,7 +73,7 @@ public class SuiteRunnerLuancher
 				}
 			}
 			
-			Bootstrap.main(interArgs);
+//			Bootstrap.main(interArgs);
 		}
 		else if(param.isGuiMode)
 		{

@@ -37,19 +37,20 @@ import java.util.Map;
 import org.dom4j.DocumentException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.suren.autotest.web.framework.core.ProgressInfo;
-import org.suren.autotest.web.framework.core.ui.Button;
-import org.suren.autotest.web.framework.core.ui.CheckBoxGroup;
-import org.suren.autotest.web.framework.core.ui.FileUpload;
-import org.suren.autotest.web.framework.core.ui.Selector;
-import org.suren.autotest.web.framework.core.ui.Text;
-import org.suren.autotest.web.framework.data.DynamicDataSource;
-import org.suren.autotest.web.framework.page.Page;
 import org.suren.autotest.web.framework.settings.SettingUtil;
 import org.suren.autotest.web.framework.util.StringUtils;
 import org.suren.autotest.web.framework.util.ThreadUtil;
 import org.suren.autotest.web.framework.validation.Validation;
 import org.xml.sax.SAXException;
+
+import com.surenpi.autotest.datasource.DynamicDataSource;
+import com.surenpi.autotest.webui.Page;
+import com.surenpi.autotest.webui.core.ProgressInfo;
+import com.surenpi.autotest.webui.ui.Button;
+import com.surenpi.autotest.webui.ui.CheckBoxGroup;
+import com.surenpi.autotest.webui.ui.FileUpload;
+import com.surenpi.autotest.webui.ui.Selector;
+import com.surenpi.autotest.webui.ui.Text;
 
 /**
  * 测试套件运行入口类

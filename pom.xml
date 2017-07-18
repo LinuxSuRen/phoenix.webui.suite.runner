@@ -1,11 +1,20 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
+	
+	<parent>
+		<groupId>com.surenpi.autotest</groupId>
+		<artifactId>autotest.parent</artifactId>
+		<version>1.0.1-20170618</version>
+	</parent>
+	
 	<artifactId>autotest.suite.runner</artifactId>
-	<version>1.0.0-20170504</version>
+	<version>1.0.1-20170718</version>
+	
 	<name>autotest.suite.runner</name>
 	<description>测试套件启动类</description>
 	<url>http://surenpi.com</url>
+	
 	<organization>
 		<name>suren</name>
 		<url>http://surenpi.com</url>
@@ -87,7 +96,7 @@
 		<dependency>
 			<groupId>org.springframework.shell</groupId>
 			<artifactId>spring-shell</artifactId>
-			<version>1.2.0.M1</version>
+			<version>1.2.0.RELEASE</version>
 		</dependency>
 
 		<!-- 单元测试 -->
@@ -101,7 +110,7 @@
 		<dependency>
 			<groupId>com.surenpi.autotest</groupId>
 			<artifactId>autotest.web.framework</artifactId>
-			<version>1.0.2-20170422</version>
+			<version>2.0.0-20170706</version>
 		</dependency>
 		<dependency>
 			<groupId>com.surenpi.autotest</groupId>
@@ -109,9 +118,4 @@
 			<version>1.0.2-20170422</version>
 		</dependency>
 	</dependencies>
-	<parent>
-		<groupId>com.surenpi.autotest</groupId>
-		<artifactId>autotest.parent</artifactId>
-		<version>1.0.0-20170504</version>
-	</parent>
 </project>

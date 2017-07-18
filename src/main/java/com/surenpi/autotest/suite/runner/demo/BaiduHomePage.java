@@ -18,15 +18,16 @@ package com.surenpi.autotest.suite.runner.demo;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.suren.autotest.web.framework.core.ui.Text;
-import org.suren.autotest.web.framework.page.Page;
+import org.suren.autotest.web.framework.selenium.WebPage;
+
+import com.surenpi.autotest.webui.ui.Text;
 
 /**
  * @author suren
  * @date 2017年4月27日 下午10:03:36
  */
 @Component
-public class BaiduHomePage extends Page
+public class BaiduHomePage extends WebPage
 {
 	@Autowired
 	private Text kw;
