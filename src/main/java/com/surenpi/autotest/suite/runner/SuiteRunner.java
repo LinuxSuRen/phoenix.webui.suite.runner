@@ -326,7 +326,7 @@ public class SuiteRunner
 		}
 		
 		URL suitePathUrl = suite.getPathUrl();
-		try(Phoenix settingUtil = new Phoenix())
+		try(Phoenix phoenix = new Phoenix())
 		{
 			String[] xmlConfArray = xmlConfPath.split(",");
 			for(String xmlConf : xmlConfArray)
@@ -338,15 +338,15 @@ public class SuiteRunner
 					File patentFile = new File(URLDecoder.decode(suitePathUrl.getFile(), "utf-8"));
 					patentFile = patentFile.getParentFile();
 					
-					settingUtil.readFromSystemPath(new File(patentFile, xmlConf).toString());
+					phoenix.readFromSystemPath(new File(patentFile, xmlConf).toString());
 				}
 				else
 				{
-					settingUtil.readFromClassPath(xmlConf);
+					phoenix.readFromClassPath(xmlConf);
 				}
 			}
 			
-			settingUtil.getEngine().setProgressId("progress_identify", progressInfo.getIdentify());
+			phoenix.getEngine().setProgressId("progress_identify", progressInfo.getIdentify());
 			
 			List<SuitePage> pageList = suite.getPageList();
 			
@@ -358,7 +358,7 @@ public class SuiteRunner
 				
 				this.progressInfo.setInfo(String.format("准备使用第[%s]组数据运行套件，然后休眠时间[%s]毫秒！", row, afterSleep));
 				
-				runSuiteWithData(settingUtil, row, pageList);
+				runSuiteWithData(phoenix, row, pageList);
 				
 				if(afterSleep > 0)
 				{
@@ -443,14 +443,14 @@ public class SuiteRunner
 	 * 执行动作集合
 	 * @param page 
 	 * @param actionList
-	 * @param settingUtil 
+	 * @param phoenix 
 	 * @throws SecurityException 
 	 * @throws NoSuchFieldException 
 	 * @throws InterruptedException 
 	 * @throws IllegalAccessException 
 	 * @throws IllegalArgumentException 
 	 */
-	private void performActionList(final Page page, List<SuiteAction> actionList, Phoenix settingUtil)
+	private void performActionList(final Page page, List<SuiteAction> actionList, Phoenix phoenix)
 			throws SecurityException, InterruptedException,
 			IllegalArgumentException, IllegalAccessException
 	{
@@ -465,7 +465,7 @@ public class SuiteRunner
 			{
 				String pkg = page.getClass().getPackage().getName();
 				String otherPageStr = String.format("%s.%s", pkg, field.substring(0, otherPage));
-				Object pageObj = settingUtil.getPage(otherPageStr);
+				Object pageObj = phoenix.getPage(otherPageStr);
 				if(pageObj == null)
 				{
 					progressInfo.setInfo(String.format("Can not found page [%s].", otherPageStr));
@@ -510,7 +510,7 @@ public class SuiteRunner
 			
 			//防止一个任务长期执行
 			PerformAction performAction = new PerformAction(action, pageField,
-					targetPage, settingUtil, progressInfo);
+					targetPage, phoenix, progressInfo);
 			performAction.run();
 //			Future<?> future = executor.submit(performAction);
 //			
@@ -536,12 +536,12 @@ public class SuiteRunner
 		private ProgressInfo<String>	progressInfo;
 
 		private PerformAction(SuiteAction action, Field pageField, Page targetPage,
-				Phoenix settingUtil, ProgressInfo<String> progressInfo)
+				Phoenix phoenix, ProgressInfo<String> progressInfo)
 		{
 			this.action = action;
 			this.pageField = pageField;
 			this.targetPage = targetPage;
-			this.settingUtil = settingUtil;
+			this.settingUtil = phoenix;
 			this.progressInfo = progressInfo;
 		}
 
@@ -611,6 +611,9 @@ public class SuiteRunner
 				Button but = getFieldObj(Button.class, pageField, page);
 				if(but != null)
 				{
+					this.globalData.forEach((key, value) -> {
+						but.putData(key, value);
+					});
 					but.click();
 				}
 				break;
