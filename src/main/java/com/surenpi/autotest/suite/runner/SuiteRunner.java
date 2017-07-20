@@ -61,6 +61,9 @@ public class SuiteRunner
 {
 	private static final Logger logger = LoggerFactory.getLogger(SuiteRunner.class);
 	
+	private Class<?> applicationClazz;
+	private String[] applicationArgs;
+	
 	public static void main(String[] args) throws NoSuchFieldException, SecurityException,
 		IllegalArgumentException, IllegalAccessException, IOException, DocumentException,
 		InterruptedException, SAXException
@@ -104,6 +107,21 @@ public class SuiteRunner
 		{
 			setEmptyProgress();
 		}
+	}
+	
+	public void initFromEnv()
+	{
+		System.getProperties().forEach((key, value) -> {
+			String keyStr = key.toString();
+			
+			if(keyStr.startsWith("runner."))
+			{
+				String dataKey = keyStr.replace("runner.", "");
+				
+				putData(dataKey, value);
+				putSourceData(dataKey, value);
+			}
+		});
 	}
 	
 	/**
@@ -326,7 +344,7 @@ public class SuiteRunner
 		}
 		
 		URL suitePathUrl = suite.getPathUrl();
-		try(Phoenix phoenix = new Phoenix())
+		try(Phoenix phoenix = new Phoenix(applicationClazz))
 		{
 			String[] xmlConfArray = xmlConfPath.split(",");
 			for(String xmlConf : xmlConfArray)
@@ -880,5 +898,37 @@ public class SuiteRunner
 	public void putSourceData(String key, Object value)
 	{
 		putMapData(DATA_SOURCE_PARAM_KEY, key, value);
+	}
+
+	/**
+	 * @return the applicationClazz
+	 */
+	public Class<?> getApplicationClazz()
+	{
+		return applicationClazz;
+	}
+
+	/**
+	 * @param applicationClazz the applicationClazz to set
+	 */
+	public void setApplicationClazz(Class<?> applicationClazz)
+	{
+		this.applicationClazz = applicationClazz;
+	}
+
+	/**
+	 * @return the applicationArgs
+	 */
+	public String[] getApplicationArgs()
+	{
+		return applicationArgs;
+	}
+
+	/**
+	 * @param applicationArgs the applicationArgs to set
+	 */
+	public void setApplicationArgs(String[] applicationArgs)
+	{
+		this.applicationArgs = applicationArgs;
 	}
 }
