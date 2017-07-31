@@ -36,3 +36,20 @@ node {
     }
   }
 }
+
+properties([
+    [
+        $class: 'GithubProjectProperty',
+        displayName: 'phoenix.webui.suite.runner',
+        projectUrlStr: 'https://github.com/LinuxSuRen/phoenix.webui.suite.runner'
+    ],
+    buildDiscarder(
+        logRotator(
+            artifactDaysToKeepStr: '',
+            artifactNumToKeepStr: '',
+            daysToKeepStr: '7',
+            numToKeepStr: '14'
+        )
+    ),
+    pipelineTriggers([])
+])
