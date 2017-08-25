@@ -14,11 +14,10 @@
  * limitations under the License.
  */
 
-package com.surenpi.autotest.suite.runner;
+package com.surenpi.autotest.suite.parser;
 
 import java.io.InputStream;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import org.dom4j.Document;
@@ -28,14 +27,18 @@ import org.dom4j.XPath;
 import org.dom4j.io.SAXReader;
 import org.dom4j.xpath.DefaultXPath;
 import org.jaxen.SimpleNamespaceContext;
-import org.suren.autotest.web.framework.util.StringUtils;
+
+import com.surenpi.autotest.suite.runner.Suite;
+import com.surenpi.autotest.suite.runner.SuiteAction;
+import com.surenpi.autotest.suite.runner.SuitePage;
+import com.surenpi.autotest.utils.StringUtils;
 
 /**
- * 测试套件配置文件解析
+ * xml文件格式测试套件配置文件解析
  * @author suren
  * @date 2016年9月7日 下午9:36:16
  */
-public class SuiteParser
+public class XmlSuiteParser implements SuiteParser
 {
 	/** 命名空间地址 */
 	public static final String NS_URI = "http://suite.surenpi.com";
@@ -86,20 +89,6 @@ public class SuiteParser
 		
 		return suite;
 	}
-	
-	/**
-	 * 返回结果不允许修改
-	 * @return 支持的文件后缀
-	 */
-	public List<String> getSupport()
-	{
-		if(supportList.size() == 0)
-		{
-			supportList.add(".xml");
-		}
-		
-		return Collections.unmodifiableList(supportList);
-	}
 
 	/**
 	 * 解析page配置
@@ -120,7 +109,8 @@ public class SuiteParser
 		XPath xpath = new DefaultXPath("/ns:suite/ns:page");
 		xpath.setNamespaceContext(simpleNamespaceContext);
 		
-		List<Element> pageNodes = xpath.selectNodes(document);
+		@SuppressWarnings("unchecked")
+        List<Element> pageNodes = xpath.selectNodes(document);
 		if(pageNodes == null || pageNodes.size() == 0)
 		{
 			throw new RuntimeException("Can not found page config.");
@@ -174,7 +164,8 @@ public class SuiteParser
 		DefaultXPath xpath = new DefaultXPath("ns:action");
 		xpath.setNamespaceContext(simpleNamespaceContext);
 		
-		List<Element> actionEleList = xpath.selectNodes(actionsEle);
+		@SuppressWarnings("unchecked")
+        List<Element> actionEleList = xpath.selectNodes(actionsEle);
 		for(Element actionEle : actionEleList)
 		{
 			String field = actionEle.attributeValue("field");
@@ -210,7 +201,8 @@ public class SuiteParser
 	{
 		List<String> paramList = suiteAction.getParamList();
 		
-		List<Element> paramEleList = actionEle.elements("param");
+		@SuppressWarnings("unchecked")
+        List<Element> paramEleList = actionEle.elements("param");
 		if(paramEleList != null)
 		{
 			for(Element paramEle : paramEleList)

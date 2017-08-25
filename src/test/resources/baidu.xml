@@ -4,7 +4,7 @@
 	xsi:schemaLocation="http://surenpi.com http://surenpi.com ">
 	<suren:engine />
 	<suren:pages>
-		<suren:page class="com.surenpi.autotest.suite.runner.demo.BaiduHomePage"
+		<suren:page class="autotest.suite.runner.BaiduHomePage"
 			url="https://www.baidu.com/" dataSource="baidu_data">
 			<suren:field name="kw" type="input" byId="kw"/>
 		</suren:page>

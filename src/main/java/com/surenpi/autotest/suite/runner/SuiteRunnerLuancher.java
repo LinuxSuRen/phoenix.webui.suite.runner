@@ -177,6 +177,10 @@ public class SuiteRunnerLuancher
 					{
 						e1.printStackTrace();
 					}
+                    catch (Exception e1)
+                    {
+                        e1.printStackTrace();
+                    }
 				}
 			}
 		});

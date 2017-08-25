@@ -38,12 +38,14 @@ import org.dom4j.DocumentException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.suren.autotest.web.framework.settings.Phoenix;
-import org.suren.autotest.web.framework.util.StringUtils;
-import org.suren.autotest.web.framework.util.ThreadUtil;
 import org.suren.autotest.web.framework.validation.Validation;
 import org.xml.sax.SAXException;
 
 import com.surenpi.autotest.datasource.DynamicDataSource;
+import com.surenpi.autotest.suite.parser.SuiteParser;
+import com.surenpi.autotest.suite.parser.XmlSuiteParser;
+import com.surenpi.autotest.utils.StringUtils;
+import com.surenpi.autotest.utils.ThreadUtil;
 import com.surenpi.autotest.webui.Page;
 import com.surenpi.autotest.webui.core.ProgressInfo;
 import com.surenpi.autotest.webui.ui.Button;
@@ -64,9 +66,7 @@ public class SuiteRunner
 	private Class<?> applicationClazz;
 	private String[] applicationArgs;
 	
-	public static void main(String[] args) throws NoSuchFieldException, SecurityException,
-		IllegalArgumentException, IllegalAccessException, IOException, DocumentException,
-		InterruptedException, SAXException
+	public static void main(String[] args) throws Exception
 	{
 		if(args == null)
 		{
@@ -86,7 +86,6 @@ public class SuiteRunner
 	}
 	
 	private ProgressInfo<String> progressInfo;
-//	private ExecutorService executor = Executors.newSingleThreadExecutor();
 	
 	/** 全局的参数配置 */
 	private Map<String, Object> globalData = new HashMap<String, Object>();
@@ -153,44 +152,18 @@ public class SuiteRunner
 	/**
 	 * 从类路径中查找配置文件
 	 * @param filePath
-	 * @throws IOException
-	 * @throws DocumentException
-	 * @throws NoSuchFieldException
-	 * @throws SecurityException
-	 * @throws IllegalArgumentException
-	 * @throws IllegalAccessException
-	 * @throws InterruptedException
-	 * @throws SAXException 
+	 * @throws Exception 
 	 */
 	public void runFromClasspathFile(final String filePath)
-			throws IOException, DocumentException, NoSuchFieldException,
-			SecurityException, IllegalArgumentException, IllegalAccessException,
-			InterruptedException, SAXException
+			throws Exception
 	{
 		if(StringUtils.isBlank(filePath))
 		{
 			throw new IllegalArgumentException("File path can not be empty.");
 		}
 		
-		SuiteParser suiteParser = new SuiteParser();
+		SuiteParser suiteParser = SuiteParserFactory.newInstance(filePath);
 		ClassLoader classLoader = SuiteRunner.class.getClassLoader();
-		
-		String targetFilePath = filePath;
-		boolean suffixMatch = false;
-		for(String suffix : suiteParser.getSupport())
-		{
-			if(filePath.endsWith(suffix))
-			{
-				suffixMatch = true;
-				break;
-			}
-		}
-		
-		if(!suffixMatch)
-		{
-			// 没有从已经支持的文件后缀中找到对应的，指定为默认的类型
-			targetFilePath = (targetFilePath + suiteParser.getSupport().get(0));
-		}
 		
 		int resCount = 0;
 		Enumeration<URL> resources = classLoader.getResources(filePath);
@@ -200,11 +173,11 @@ public class SuiteRunner
 			
 			resCount++;
 			progressInfo.setInfo(String.format("Prepare to run from file : [%s].", url));
-			
-			try(InputStream input4Valid = url.openStream())
-			{
-				Validation.validationSuite(input4Valid);
-			}
+//			
+//			try(InputStream input4Valid = url.openStream())
+//			{
+//				Validation.validationSuite(input4Valid);
+//			}
 
 			try(InputStream input = url.openStream())
 			{
@@ -295,7 +268,7 @@ public class SuiteRunner
 			new IllegalArgumentException(String.format("File [%s] is not a file.", runnerFile.getAbsolutePath()));
 		}
 		
-		SuiteParser suiteParser = new SuiteParser();
+		XmlSuiteParser suiteParser = new XmlSuiteParser();
 //		try(InputStream input4Valid = new FileInputStream(runnerFile))
 //		{
 //			Validation.validationSuite(input4Valid);
@@ -346,6 +319,7 @@ public class SuiteRunner
 		URL suitePathUrl = suite.getPathUrl();
 		try(Phoenix phoenix = new Phoenix(applicationClazz))
 		{
+		    phoenix.init();
 			String[] xmlConfArray = xmlConfPath.split(",");
 			for(String xmlConf : xmlConfArray)
 			{
@@ -396,7 +370,8 @@ public class SuiteRunner
 	 * @throws IllegalAccessException
 	 * @throws InterruptedException
 	 */
-	private void runSuiteWithData(Phoenix settingUtil, int row, List<SuitePage> pageList)
+	@SuppressWarnings("unchecked")
+    private void runSuiteWithData(Phoenix settingUtil, int row, List<SuitePage> pageList)
 			throws SecurityException, IllegalArgumentException, IllegalAccessException, InterruptedException
 	{
 		

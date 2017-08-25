@@ -18,6 +18,8 @@ public class SuitePage
 	private List<SuiteAction> actionList;
 	/** 重复执行次数 */
 	private int repeat;
+
+    public SuitePage(){}
 	
 	public SuitePage(String page)
 	{

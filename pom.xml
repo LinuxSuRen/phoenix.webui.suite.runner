@@ -5,11 +5,11 @@
 	<parent>
 		<groupId>com.surenpi.autotest</groupId>
 		<artifactId>autotest.parent</artifactId>
-		<version>1.0.1-20170618</version>
+		<version>1.0.1-20170815-SNAPSHOT</version>
 	</parent>
 	
 	<artifactId>autotest.suite.runner</artifactId>
-	<version>1.0.1-20170718</version>
+	<version>1.0.1-20170824-SNAPSHOT</version>
 	
 	<name>autotest.suite.runner</name>
 	<description>测试套件启动类</description>
@@ -37,11 +37,6 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
-				<version>3.6.1</version>
-				<configuration>
-					<source>1.8</source>
-					<target>1.8</target>
-				</configuration>
 			</plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
@@ -100,32 +95,52 @@
 		<dependency>
 			<groupId>com.beust</groupId>
 			<artifactId>jcommander</artifactId>
-			<version>1.60</version>
 		</dependency>
 
 		<dependency>
 			<groupId>org.springframework.shell</groupId>
 			<artifactId>spring-shell</artifactId>
 			<version>1.2.0.RELEASE</version>
+			<exclusions>
+				<exclusion>
+					<groupId>org.springframework</groupId>
+					<artifactId>spring-core</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>org.springframework</groupId>
+					<artifactId>spring-context-support</artifactId>
+				</exclusion>
+				<exclusion>
+				    <groupId>com.google.guava</groupId>
+				    <artifactId>guava</artifactId>
+				</exclusion>
+			</exclusions>
 		</dependency>
 
 		<!-- 单元测试 -->
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
-			<version>4.8.1</version>
 			<scope>test</scope>
 		</dependency>
 
 		<dependency>
 			<groupId>com.surenpi.autotest</groupId>
 			<artifactId>autotest.web.framework</artifactId>
-			<version>2.0.0-20170706</version>
 		</dependency>
 		<dependency>
 			<groupId>com.surenpi.autotest</groupId>
 			<artifactId>autotest.webdriver.downloader</artifactId>
-			<version>1.0.2-20170422</version>
 		</dependency>
+        <dependency>
+			<groupId>com.surenpi.autotest</groupId>
+        	<artifactId>autotest.utils</artifactId>
+        </dependency>
+        
+        <dependency>
+		    <groupId>com.google.guava</groupId>
+		    <artifactId>guava</artifactId>
+		    <version>21.0</version>
+        </dependency>
 	</dependencies>
 </project>

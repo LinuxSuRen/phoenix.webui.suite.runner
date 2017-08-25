@@ -14,10 +14,10 @@
  * limitations under the License.
  */
 
-package com.surenpi.autotest.suite.runner.demo;
+package autotest.suite.runner;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import org.suren.autotest.web.framework.annotation.AutoPage;
 import org.suren.autotest.web.framework.selenium.WebPage;
 
 import com.surenpi.autotest.webui.ui.Text;
@@ -26,7 +26,7 @@ import com.surenpi.autotest.webui.ui.Text;
  * @author suren
  * @date 2017年4月27日 下午10:03:36
  */
-@Component
+@AutoPage(url = "http://baidu.com", startPage = true)
 public class BaiduHomePage extends WebPage
 {
 	@Autowired
