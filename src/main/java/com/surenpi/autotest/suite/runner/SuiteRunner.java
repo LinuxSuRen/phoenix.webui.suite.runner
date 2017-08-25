@@ -38,7 +38,6 @@ import org.dom4j.DocumentException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.suren.autotest.web.framework.settings.Phoenix;
-import org.suren.autotest.web.framework.validation.Validation;
 import org.xml.sax.SAXException;
 
 import com.surenpi.autotest.datasource.DynamicDataSource;

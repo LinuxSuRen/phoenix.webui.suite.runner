@@ -43,6 +43,9 @@ public class RunnerParam
 	@Parameter(names = "-download-dir", description = "指定下载后的目录")
 	public String downloadDir;
 	
+	@Parameter(names = "-compile", description = "自动编译Page类")
+	public boolean compile;
+	
 	@Parameter(names = "-gui", description = "启动GUI界面")
 	public boolean isGuiMode = false;
 	

@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.surenpi.autotest.suite.runner;
+package com.surenpi.autotest.suite;
 
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
@@ -41,6 +41,9 @@ import org.dom4j.DocumentException;
 import org.xml.sax.SAXException;
 
 import com.beust.jcommander.JCommander;
+import com.surenpi.autotest.suite.runner.RunnerParam;
+import com.surenpi.autotest.suite.runner.SuiteRunner;
+import com.surenpi.autotest.suite.runner.SuiteUtil;
 
 
 /**

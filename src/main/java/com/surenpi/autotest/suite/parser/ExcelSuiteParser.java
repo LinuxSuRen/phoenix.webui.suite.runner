@@ -100,10 +100,42 @@ public class ExcelSuiteParser implements SuiteParser
     {
         if(sheet.getSheetName().equals("SuiteConfig"))
         {
-            Row row = sheet.getRow(0);
-            if(row.getCell(0).getStringCellValue().equals("PageConfig"))
+            for(int i = 0; i < maxRows; i++)
             {
-                suite.setXmlConfPath(row.getCell(1).getStringCellValue());
+                Row row = sheet.getRow(i);
+                if(row == null)
+                {
+                    break;
+                }
+                
+                Cell keyCell = row.getCell(0);
+                Cell valCell = row.getCell(1);
+                if(keyCell == null || valCell == null)
+                {
+                    continue;
+                }
+                
+                String keyCellVal = keyCell.getStringCellValue();
+                String valCellVal = valCell.getStringCellValue();
+                if(keyCellVal.equals("PageConfig"))
+                {
+                    suite.setXmlConfPath(valCellVal);
+                }
+                else if(keyCellVal.equals("PagePackage"))
+                {
+                    suite.setPagePackage(valCellVal);
+                }
+                else if(keyCellVal.equals("AfterSleep"))
+                {
+                    try
+                    {
+                        suite.setAfterSleep(Long.parseLong(valCellVal));
+                    }
+                    catch(NumberFormatException e)
+                    {
+                        e.printStackTrace();
+                    }
+                }
             }
             
             return false;

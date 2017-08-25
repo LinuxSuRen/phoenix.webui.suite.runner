@@ -47,7 +47,7 @@
 						<manifest>
 							<addClasspath>true</addClasspath>
 							<classpathPrefix>lib/</classpathPrefix>
-							<mainClass>com.surenpi.autotest.suite.runner.SuiteRunnerLuancher</mainClass>
+							<mainClass>com.surenpi.autotest.suite.SuiteRunnerLuancher</mainClass>
 						</manifest>
 					</archive>
 				</configuration>
@@ -88,6 +88,26 @@
 					<autoReleaseAfterClose>true</autoReleaseAfterClose>
 				</configuration>
 			</plugin>
+			<plugin>
+				<groupId>org.sonatype.install4j</groupId>
+	            <artifactId>install4j-maven-plugin</artifactId>
+	            <executions>
+	                <execution>
+	                    <id>compile-installers</id>
+	                    <phase>install</phase>
+	                    <goals>
+	                        <goal>compile</goal>
+	                    </goals>
+	                    <configuration>
+	                        <projectFile>${project.basedir}/src/main/installer/phoenix.install4j</projectFile>
+	                        <jvmArguments>
+	                            <arg>-Dinstall4j.connectTimeout=20000</arg>
+	                            <arg>-Dinstall4j.readTimeout=20000</arg>
+	                        </jvmArguments>
+	                    </configuration>
+	                </execution>
+	            </executions>
+	        </plugin>
 		</plugins>
 	</build>
 
@@ -136,10 +156,25 @@
 			<groupId>com.surenpi.autotest</groupId>
         	<artifactId>autotest.utils</artifactId>
         </dependency>
+		<dependency>
+			<groupId>com.surenpi.autotest</groupId>
+			<artifactId>autotest.code.generator</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.surenpi.autotest</groupId>
+			<artifactId>autotest.code.compiler</artifactId>
+		</dependency>
         
         <dependency>
 		    <groupId>com.google.guava</groupId>
 		    <artifactId>guava</artifactId>
         </dependency>
 	</dependencies>
+	
+	<properties>
+		<install4j.home>changeme</install4j.home>
+		<install4j.winKeystorePassword>changeme</install4j.winKeystorePassword>
+		<install4j.macKeystorePassword>changeme</install4j.macKeystorePassword>
+		<install4j.licenseKey>changeme</install4j.licenseKey>
+	</properties>
 </project>
