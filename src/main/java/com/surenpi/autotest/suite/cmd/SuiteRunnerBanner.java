@@ -1,3 +1,4 @@
+package com.surenpi.autotest.suite.cmd;
 ///*
 // * Copyright 2002-2007 the original author or authors.
 // *

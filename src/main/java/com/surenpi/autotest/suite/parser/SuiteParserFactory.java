@@ -14,11 +14,7 @@
  * limitations under the License.
  */
 
-package com.surenpi.autotest.suite.runner;
-
-import com.surenpi.autotest.suite.parser.ExcelSuiteParser;
-import com.surenpi.autotest.suite.parser.SuiteParser;
-import com.surenpi.autotest.suite.parser.XmlSuiteParser;
+package com.surenpi.autotest.suite.parser;
 
 /**
  * @author <a href="http://surenpi.com">suren</a>

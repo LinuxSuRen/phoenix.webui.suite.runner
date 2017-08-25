@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.surenpi.autotest.suite.runner;
+package com.surenpi.autotest.suite.util;
 
 import java.io.ByteArrayInputStream;
 
@@ -27,7 +27,7 @@ import org.dom4j.io.SAXReader;
  * @author suren
  * @date 2017年4月27日 下午9:20:19
  */
-public abstract class SuiteUtil
+public abstract class SuiteUtils
 {
 	/**
 	 * 判断是否为suite的xml配置

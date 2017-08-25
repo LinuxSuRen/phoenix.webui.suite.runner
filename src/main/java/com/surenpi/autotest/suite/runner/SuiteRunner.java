@@ -42,6 +42,7 @@ import org.xml.sax.SAXException;
 
 import com.surenpi.autotest.datasource.DynamicDataSource;
 import com.surenpi.autotest.suite.parser.SuiteParser;
+import com.surenpi.autotest.suite.parser.SuiteParserFactory;
 import com.surenpi.autotest.suite.parser.XmlSuiteParser;
 import com.surenpi.autotest.utils.StringUtils;
 import com.surenpi.autotest.utils.ThreadUtil;

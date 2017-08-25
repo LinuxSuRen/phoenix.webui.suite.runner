@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.surenpi.autotest.suite.runner;
+package com.surenpi.autotest.suite.cmd;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -41,9 +41,9 @@ import org.dom4j.DocumentException;
 import org.xml.sax.SAXException;
 
 import com.beust.jcommander.JCommander;
-import com.surenpi.autotest.suite.runner.RunnerParam;
+import com.surenpi.autotest.suite.cmd.RunnerParam;
 import com.surenpi.autotest.suite.runner.SuiteRunner;
-import com.surenpi.autotest.suite.runner.SuiteUtil;
+import com.surenpi.autotest.suite.util.SuiteUtils;
 
 
 /**
@@ -127,7 +127,7 @@ public class SuiteRunnerLuancher
 			try(InputStream input = itemUrl.openStream())
 			{
 				byte[] content = IOUtils.toByteArray(input);
-				if(SuiteUtil.isSuiteXml(content))
+				if(SuiteUtils.isSuiteXml(content))
 				{
 					urlList.add(itemUrl);
 				}
