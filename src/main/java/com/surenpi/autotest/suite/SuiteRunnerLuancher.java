@@ -16,34 +16,28 @@
 
 package com.surenpi.autotest.suite;
 
-import java.awt.BorderLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.UnsupportedEncodingException;
-import java.net.URL;
-import java.net.URLDecoder;
-import java.util.ArrayList;
-import java.util.List;
-
-import javax.swing.JButton;
-import javax.swing.JCheckBox;
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-
+import com.beust.jcommander.JCommander;
+import com.surenpi.autotest.code.Generator;
+import com.surenpi.autotest.code.impl.DefaultXmlCodeGenerator;
+import com.surenpi.autotest.compiler.JDTUtils;
+import com.surenpi.autotest.suite.cmd.RunnerParam;
+import com.surenpi.autotest.suite.runner.SuiteRunner;
+import com.surenpi.autotest.suite.util.PageXmlFilter;
+import com.surenpi.autotest.suite.util.SuiteUtils;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.io.IOUtils;
 import org.dom4j.DocumentException;
 import org.xml.sax.SAXException;
 
-import com.beust.jcommander.JCommander;
-import com.surenpi.autotest.suite.cmd.RunnerParam;
-import com.surenpi.autotest.suite.runner.SuiteRunner;
-import com.surenpi.autotest.suite.util.SuiteUtils;
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.*;
+import java.net.URL;
+import java.net.URLDecoder;
+import java.util.ArrayList;
+import java.util.List;
 
 
 /**
@@ -59,10 +53,16 @@ public class SuiteRunnerLuancher
 		
 		List<URL> urlList = new ArrayList<URL>();
 		runnerRead(urlList);
-		
-		if(param.listRunners)
+        System.out.println(new File("generatedDst", "com/surenpi/autotest/demo/Hello").getAbsolutePath());
+
+        if(param.listRunners)
 		{
 			System.out.println(urlList);
+		}
+
+		if(param.compile)
+		{
+			compile(param);
 		}
 		
 		if(param.interactive)
@@ -95,8 +95,37 @@ public class SuiteRunnerLuancher
 			commander.usage();
 		}
 	}
-	
-	/**
+
+    private static void compile(RunnerParam param)
+    {
+        URL itemUrl = SuiteRunnerLuancher.class.getResource("/");
+        System.out.println(itemUrl);
+
+        String protocol = itemUrl.getProtocol();
+        if("file".equals(protocol))
+        {
+            String file = itemUrl.getFile();
+            File[] subFiles = new File(file).listFiles(new PageXmlFilter());
+
+            Generator generator = new DefaultXmlCodeGenerator(){
+                @Override
+                protected void done()
+                {
+                    super.done();
+                }
+            };
+
+            for(File pageFile : subFiles)
+            {
+                generator.generate(pageFile.getName(), param.compileDstDir);
+            }
+
+            JDTUtils utils = new JDTUtils(param.compileDstDir);
+            utils.compileAllFile();
+        }
+    }
+
+    /**
 	 * @param urlList
 	 * @throws IOException 
 	 * @throws UnsupportedEncodingException 
