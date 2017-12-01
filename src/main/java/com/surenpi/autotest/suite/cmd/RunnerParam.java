@@ -16,15 +16,14 @@
 
 package com.surenpi.autotest.suite.cmd;
 
+import com.beust.jcommander.Parameter;
+
 import java.util.ArrayList;
 import java.util.List;
-
-import com.beust.jcommander.Parameter;
 
 /**
  * 测试套件运行参数
  * @author suren
- * @date 2017年4月26日 下午5:01:34
  */
 public class RunnerParam
 {
@@ -32,7 +31,7 @@ public class RunnerParam
 	public boolean listRunners = false;
 	
 	@Parameter(names = "-runners", description = "指定运行的测试套件列表")
-	public List<String> runners = new ArrayList<String>();
+	public List<String> runners = new ArrayList<>();
 	
 	@Parameter(names = "-download", description = "下载驱动")
 	public boolean download;
@@ -44,7 +43,13 @@ public class RunnerParam
 	public String downloadDir;
 	
 	@Parameter(names = "-compile", description = "自动编译Page类")
-	public boolean compile;
+	public boolean compile = true;
+
+	@Parameter(names = "-compile-src", description = "自动编译Page源码目录")
+	public String compileSrcDir = "generatedSrc";
+
+    @Parameter(names = "-compile-dst", description = "自动编译Page类目录")
+	public String compileDstDir = "generatedDst";
 	
 	@Parameter(names = "-gui", description = "启动GUI界面")
 	public boolean isGuiMode = false;
