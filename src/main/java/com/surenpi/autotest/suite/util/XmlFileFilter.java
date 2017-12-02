@@ -13,4 +13,9 @@ public class XmlFileFilter implements FilenameFilter
     {
         return subFileName.endsWith(".xml");
     }
+
+    public boolean hasRoot(File file, String subFileName, String rootName)
+    {
+        return XmlUtils.hasRoot(new File(file, subFileName), rootName);
+    }
 }
