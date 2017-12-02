@@ -47,7 +47,7 @@
 						</xs:sequence>
 					</xs:complexType>
 				</xs:element>
-				<xs:element name="page" type="suren:suitePageType" maxOccurs="unbounded">
+				<xs:element name="pages" type="suren:suitePagesType" maxOccurs="1">
 					<xs:annotation>
 						<xs:documentation>
 							<![CDATA[用于测试的Page类配置。]]>
@@ -106,7 +106,13 @@
 			</xs:attribute>
 		</xs:complexType>
 	</xs:element>
-	
+
+	<xs:complexType name="suitePagesType">
+        <xs:sequence>
+            <xs:element name="page" type="suren:suitePageType" maxOccurs="unbounded"></xs:element>
+        </xs:sequence>
+    </xs:complexType>
+
 	<xs:complexType name="suitePageType">
 		<xs:sequence>
 			<xs:element name="actions" type="suren:actionsType" minOccurs="0" maxOccurs="unbounded">
