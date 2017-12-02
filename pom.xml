@@ -48,6 +48,7 @@
 							<addClasspath>true</addClasspath>
 							<classpathPrefix>lib/</classpathPrefix>
 							<mainClass>com.surenpi.autotest.suite.SuiteRunnerLuancher</mainClass>
+                            <useUniqueVersions>false</useUniqueVersions>
 						</manifest>
 					</archive>
 				</configuration>
@@ -163,6 +164,10 @@
 		<dependency>
 			<groupId>com.surenpi.autotest</groupId>
 			<artifactId>autotest.code.compiler</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.surenpi.autotest</groupId>
+			<artifactId>autotest.datasource</artifactId>
 		</dependency>
         
         <dependency>
