@@ -30,6 +30,7 @@ public class XStreamSuiteParser implements SuiteParser
         xStream.useAttributeFor(Suite.class, "xmlConfPath");
         xStream.aliasField("pages", Suite.class, "pageList");
         xStream.useAttributeFor(Suite.class, "pagePackage");
+        xStream.useAttributeFor(Suite.class, "rows");
 
         xStream.alias("page", SuitePage.class);
         xStream.aliasField("class", SuitePage.class, "pageCls");

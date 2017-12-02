@@ -24,6 +24,7 @@ import com.surenpi.autotest.suite.cmd.RunnerParam;
 import com.surenpi.autotest.suite.parser.SuiteParser;
 import com.surenpi.autotest.suite.parser.SuiteParserFactory;
 import com.surenpi.autotest.suite.runner.SuiteRunner;
+import com.surenpi.autotest.suite.util.Configuration;
 import com.surenpi.autotest.suite.util.PageXmlFilter;
 import com.surenpi.autotest.suite.util.SuiteUtils;
 import org.apache.commons.collections.CollectionUtils;
@@ -34,7 +35,9 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.*;
+import java.net.MalformedURLException;
 import java.net.URL;
+import java.net.URLClassLoader;
 import java.net.URLDecoder;
 import java.util.ArrayList;
 import java.util.List;
@@ -128,6 +131,38 @@ public class SuiteRunnerLauncher
 
             JDTUtils utils = new JDTUtils(param.compileDstDir);
             utils.compileAllFile();
+
+            try
+            {
+                System.out.println(new File(param.compileDstDir).toURI().toURL());
+                ClassLoader loader = new URLClassLoader(new URL[]{
+                        new File(param.compileDstDir).toURI().toURL()
+                }){
+                    @Override
+                    protected Class<?> findClass(String s) throws ClassNotFoundException
+                    {
+                        return super.findClass(s);
+                    }
+                };
+
+                Thread.currentThread().setContextClassLoader(loader);
+
+                try
+                {
+                    Class<?> obj = Class.forName("com.surenpi.autotest.demo.Hello", true, loader);
+                    System.out.println(obj.getAnnotations().length);
+                    obj = Thread.currentThread().getContextClassLoader().loadClass("com.surenpi.autotest.demo.Hello");
+                    System.out.println(obj);
+                }
+                catch (ClassNotFoundException e)
+                {
+                    e.printStackTrace();
+                }
+            }
+            catch (MalformedURLException e)
+            {
+                e.printStackTrace();
+            }
         }
     }
 
@@ -214,6 +249,7 @@ public class SuiteRunnerLauncher
         {
             SuiteRunner suiteRunner = new SuiteRunner();
             suiteRunner.setSuiteParser(parser);
+            suiteRunner.setApplicationClazz(Configuration.class);
             suiteRunner.runFromFileQuietly(new File(runner));
         }
     }
