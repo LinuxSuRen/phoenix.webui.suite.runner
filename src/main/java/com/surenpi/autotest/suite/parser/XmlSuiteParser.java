@@ -16,10 +16,10 @@
 
 package com.surenpi.autotest.suite.parser;
 
-import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.List;
-
+import com.surenpi.autotest.suite.runner.Suite;
+import com.surenpi.autotest.suite.runner.SuiteAction;
+import com.surenpi.autotest.suite.runner.SuitePage;
+import com.surenpi.autotest.utils.StringUtils;
 import org.dom4j.Document;
 import org.dom4j.DocumentException;
 import org.dom4j.Element;
@@ -28,10 +28,9 @@ import org.dom4j.io.SAXReader;
 import org.dom4j.xpath.DefaultXPath;
 import org.jaxen.SimpleNamespaceContext;
 
-import com.surenpi.autotest.suite.runner.Suite;
-import com.surenpi.autotest.suite.runner.SuiteAction;
-import com.surenpi.autotest.suite.runner.SuitePage;
-import com.surenpi.autotest.utils.StringUtils;
+import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * xml文件格式测试套件配置文件解析
@@ -67,7 +66,8 @@ public class XmlSuiteParser implements SuiteParser
 		Element suiteEle = (Element) xpath.selectSingleNode(document);
 		if (suiteEle == null)
 		{
-			throw new RuntimeException("Can not found suite config.");
+			suiteEle = document.getRootElement();
+//			throw new RuntimeException("Can not found suite config.");
 		}
 		
 		Suite suite = new Suite();
