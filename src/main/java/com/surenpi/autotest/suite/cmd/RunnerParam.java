@@ -29,6 +29,9 @@ public class RunnerParam
 {
 	@Parameter(names = "-list", description = "列出所有的测试套件")
 	public boolean listRunners = false;
+
+	@Parameter(names = "-runner-parser", description = "测试套件解析类")
+	public String runnerParser = "com.surenpi.autotest.suite.parser.XStreamSuiteParser";
 	
 	@Parameter(names = "-runners", description = "指定运行的测试套件列表")
 	public List<String> runners = new ArrayList<>();
