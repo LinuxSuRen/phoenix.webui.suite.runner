@@ -16,43 +16,26 @@
 
 package com.surenpi.autotest.suite.runner;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStream;
-import java.lang.reflect.Field;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
-import java.net.URL;
-import java.net.URLDecoder;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Enumeration;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
+import com.surenpi.autotest.datasource.DynamicDataSource;
+import com.surenpi.autotest.suite.parser.SuiteParser;
+import com.surenpi.autotest.utils.StringUtils;
+import com.surenpi.autotest.utils.ThreadUtil;
+import com.surenpi.autotest.webui.Page;
+import com.surenpi.autotest.webui.core.ProgressInfo;
+import com.surenpi.autotest.webui.ui.*;
 import org.dom4j.DocumentException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.suren.autotest.web.framework.settings.Phoenix;
 import org.xml.sax.SAXException;
 
-import com.surenpi.autotest.datasource.DynamicDataSource;
-import com.surenpi.autotest.suite.parser.SuiteParser;
-import com.surenpi.autotest.suite.parser.SuiteParserFactory;
-import com.surenpi.autotest.suite.parser.XmlSuiteParser;
-import com.surenpi.autotest.utils.StringUtils;
-import com.surenpi.autotest.utils.ThreadUtil;
-import com.surenpi.autotest.webui.Page;
-import com.surenpi.autotest.webui.core.ProgressInfo;
-import com.surenpi.autotest.webui.ui.Button;
-import com.surenpi.autotest.webui.ui.CheckBoxGroup;
-import com.surenpi.autotest.webui.ui.FileUpload;
-import com.surenpi.autotest.webui.ui.Selector;
-import com.surenpi.autotest.webui.ui.Text;
+import java.io.*;
+import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+import java.net.URL;
+import java.net.URLDecoder;
+import java.util.*;
 
 /**
  * 测试套件运行入口类
@@ -65,6 +48,7 @@ public class SuiteRunner
 	
 	private Class<?> applicationClazz;
 	private String[] applicationArgs;
+	private SuiteParser suiteParser;
 	
 	public static void main(String[] args) throws Exception
 	{
@@ -107,8 +91,18 @@ public class SuiteRunner
 			setEmptyProgress();
 		}
 	}
-	
-	public void initFromEnv()
+
+    public SuiteParser getSuiteParser()
+    {
+        return suiteParser;
+    }
+
+    public void setSuiteParser(SuiteParser suiteParser)
+    {
+        this.suiteParser = suiteParser;
+    }
+
+    public void initFromEnv()
 	{
 		System.getProperties().forEach((key, value) -> {
 			String keyStr = key.toString();
@@ -162,7 +156,6 @@ public class SuiteRunner
 			throw new IllegalArgumentException("File path can not be empty.");
 		}
 		
-		SuiteParser suiteParser = SuiteParserFactory.newInstance(filePath);
 		ClassLoader classLoader = SuiteRunner.class.getClassLoader();
 		
 		int resCount = 0;
@@ -267,8 +260,7 @@ public class SuiteRunner
 		{
 			new IllegalArgumentException(String.format("File [%s] is not a file.", runnerFile.getAbsolutePath()));
 		}
-		
-		XmlSuiteParser suiteParser = new XmlSuiteParser();
+
 //		try(InputStream input4Valid = new FileInputStream(runnerFile))
 //		{
 //			Validation.validationSuite(input4Valid);
@@ -287,6 +279,10 @@ public class SuiteRunner
 			this.progressInfo.setInfo("准备运行套件！");
 			
 			runSuite(suite);
+		}
+		catch (Exception e)
+		{
+			e.printStackTrace();
 		}
 		finally
 		{
@@ -317,7 +313,7 @@ public class SuiteRunner
 		}
 		
 		URL suitePathUrl = suite.getPathUrl();
-		try(Phoenix phoenix = new Phoenix(applicationClazz))
+		try(Phoenix phoenix = applicationClazz == null ? new Phoenix(): new Phoenix(applicationClazz))
 		{
 		    phoenix.init();
 			String[] xmlConfArray = xmlConfPath.split(",");

@@ -22,6 +22,13 @@ package com.surenpi.autotest.suite.parser;
  */
 public abstract class SuiteParserFactory
 {
+    public static SuiteParser getInstance(String clsName)
+            throws ClassNotFoundException, IllegalAccessException, InstantiationException
+    {
+        Class<?> clazz = Class.forName(clsName);
+        return (SuiteParser) clazz.newInstance();
+    }
+
     public static SuiteParser newInstance(String fileName)
     {
         SuiteParser suiteParser = null;
