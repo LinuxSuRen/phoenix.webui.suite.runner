@@ -47,7 +47,7 @@
 						<manifest>
 							<addClasspath>true</addClasspath>
 							<classpathPrefix>lib/</classpathPrefix>
-							<mainClass>com.surenpi.autotest.suite.SuiteRunnerLuancher</mainClass>
+							<mainClass>com.surenpi.autotest.suite.SuiteRunnerLauncher</mainClass>
                             <useUniqueVersions>false</useUniqueVersions>
 						</manifest>
 					</archive>
@@ -173,6 +173,12 @@
         <dependency>
 		    <groupId>com.google.guava</groupId>
 		    <artifactId>guava</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.thoughtworks.xstream</groupId>
+            <artifactId>xstream</artifactId>
+            <version>1.4.10</version>
         </dependency>
 	</dependencies>
 	
