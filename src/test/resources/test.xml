@@ -2,11 +2,11 @@
 <suren:suite xmlns:suren="http://suite.surenpi.com"
      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
      xsi:schemaLocation="http://suite.surenpi.com http://suite.surenpi.com "
-     pageConfig="page-demo.xml" pagePackage="com.surenpi.autotest.demo">
+     pageConfig="page-demo.xml" pagePackage="" rows="1" afterSleep="3000">
     <suren:pages>
-        <suren:page class="Hello">
+        <suren:page class="com.surenpi.autotest.demo.Hello">
             <suren:actions>
-                <suren:action field="name" name="click"></suren:action>
+                <suren:action field="name" name="fillValue"></suren:action>
             </suren:actions>
         </suren:page>
     </suren:pages>

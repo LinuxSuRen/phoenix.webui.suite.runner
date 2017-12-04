@@ -147,17 +147,17 @@ public class SuiteRunnerLauncher
 
                 Thread.currentThread().setContextClassLoader(loader);
 
-                try
-                {
-                    Class<?> obj = Class.forName("com.surenpi.autotest.demo.Hello", true, loader);
-                    System.out.println(obj.getAnnotations().length);
-                    obj = Thread.currentThread().getContextClassLoader().loadClass("com.surenpi.autotest.demo.Hello");
-                    System.out.println(obj);
-                }
-                catch (ClassNotFoundException e)
-                {
-                    e.printStackTrace();
-                }
+//                try
+//                {
+//                    Class<?> obj = Class.forName("com.surenpi.autotest.demo.Hello", true, loader);
+//                    System.out.println(obj.getAnnotations().length);
+//                    obj = Thread.currentThread().getContextClassLoader().loadClass("com.surenpi.autotest.demo.Hello");
+//                    System.out.println(obj);
+//                }
+//                catch (ClassNotFoundException e)
+//                {
+//                    e.printStackTrace();
+//                }
             }
             catch (MalformedURLException e)
             {

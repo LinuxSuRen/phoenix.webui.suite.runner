@@ -2,15 +2,15 @@
 <suren:autotest xmlns:suren="http://surenpi.com"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://surenpi.com http://surenpi.com/schema/autotest/autotest.web.framework.xsd ">
-	<suren:engine/>
-	<suren:pages pagePackage="com.surenpi.autotest.demo">
-		<suren:page class="Hello" url="http://surenpi.com">
-			<suren:field name="name" type="button" byId="suren" />
+	<suren:engine driver="chrome"/>
+	<suren:pages pagePackage="">
+		<suren:page class="com.surenpi.autotest.demo.Hello" url="http://baidu.com">
+			<suren:field name="name" type="input" byId="kw" data="surenpi" />
 		</suren:page>
-		<suren:page class="Gril">
+		<suren:page class="com.surenpi.autotest.demo.Gril">
 			<suren:field name="name" type="button" />
 		</suren:page>
-		<suren:page class="Body">
+		<suren:page class="com.surenpi.autotest.demo.Body">
 			<suren:field name="name" type="button" />
 		</suren:page>
 	</suren:pages>
