@@ -333,7 +333,7 @@ public class SuiteRunner
 					phoenix.readFromClassPath(xmlConf);
 				}
 			}
-			
+
 			phoenix.getEngine().setProgressId("progress_identify", progressInfo.getIdentify());
 			
 			List<SuitePage> pageList = suite.getPageList();
@@ -395,7 +395,7 @@ public class SuiteRunner
 			Page page = (Page) settingUtil.getPage(pageCls);
 			if(page == null)
 			{
-				new RuntimeException(String.format("Can not found page [%s].", pageCls));
+				throw new RuntimeException(String.format("Can not found page [%s].", pageCls));
 			}
 			
 			Object pageData = globalData.get(pageCls);
@@ -421,6 +421,7 @@ public class SuiteRunner
 			this.progressInfo.setInfo(String.format("页面[%s]一共有[%s]个测试动作！开始测试！", pageCls, actionList.size()));
 			
 			int repeat = suitePage.getRepeat();
+			repeat = repeat <= 0 ? 1: repeat;
 			for(int i = 0; i < repeat; i++)
 			{
 				performActionList(page, actionList, settingUtil);
@@ -543,6 +544,7 @@ public class SuiteRunner
 			}
 			
 			int repeat = action.getRepeat();
+			repeat = repeat <= 0 ? 1 : repeat;
 
 			for(int i = 0; i < repeat; i++)
 			{

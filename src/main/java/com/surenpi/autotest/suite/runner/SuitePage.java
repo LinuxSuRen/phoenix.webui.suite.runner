@@ -17,7 +17,7 @@ public class SuitePage
 	/** 要执行的动作集合 */
 	private List<SuiteAction> actionList;
 	/** 重复执行次数 */
-	private int repeat;
+	private int repeat = 1;
 
     public SuitePage(){}
 	

@@ -29,6 +29,8 @@ import com.surenpi.autotest.suite.util.PageXmlFilter;
 import com.surenpi.autotest.suite.util.SuiteUtils;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.io.IOUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.swing.*;
 import java.awt.*;
@@ -49,6 +51,8 @@ import java.util.List;
  */
 public class SuiteRunnerLauncher
 {
+	private static final Logger logger = LoggerFactory.getLogger(SuiteRunnerLauncher.class);
+
 	public static void main(String[] args) throws IOException
 	{
 		RunnerParam param = new RunnerParam();
@@ -101,14 +105,28 @@ public class SuiteRunnerLauncher
 		}
 	}
 
+    /**
+     * 生成代码并编译
+     * @param param
+     */
     private static void compile(RunnerParam param)
     {
         URL itemUrl = SuiteRunnerLauncher.class.getResource("/");
         if(itemUrl == null)
         {
-            return;
+            logger.warn("Can not get base url from root. Try use current dir.");
+
+            try
+            {
+                itemUrl = new File(".").toURI().toURL();
+            }
+            catch (MalformedURLException e)
+            {
+                e.printStackTrace();
+            }
         }
-        System.out.println("itemUrl:" + itemUrl);
+
+        logger.debug("Base url : {}", itemUrl);
 
         String protocol = itemUrl.getProtocol();
         if("file".equals(protocol))
@@ -134,7 +152,8 @@ public class SuiteRunnerLauncher
 
             try
             {
-                System.out.println(new File(param.compileDstDir).toURI().toURL());
+                logger.info("Compile dest dir: {}.", new File(param.compileDstDir).getAbsolutePath());
+
                 ClassLoader loader = new URLClassLoader(new URL[]{
                         new File(param.compileDstDir).toURI().toURL()
                 }){
@@ -146,18 +165,6 @@ public class SuiteRunnerLauncher
                 };
 
                 Thread.currentThread().setContextClassLoader(loader);
-
-//                try
-//                {
-//                    Class<?> obj = Class.forName("com.surenpi.autotest.demo.Hello", true, loader);
-//                    System.out.println(obj.getAnnotations().length);
-//                    obj = Thread.currentThread().getContextClassLoader().loadClass("com.surenpi.autotest.demo.Hello");
-//                    System.out.println(obj);
-//                }
-//                catch (ClassNotFoundException e)
-//                {
-//                    e.printStackTrace();
-//                }
             }
             catch (MalformedURLException e)
             {
