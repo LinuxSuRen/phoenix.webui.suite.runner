@@ -46,8 +46,8 @@ import java.util.List;
 
 
 /**
+ * 测试套件入口
  * @author suren
- * @date 2017年4月26日 下午9:37:26
  */
 public class SuiteRunnerLauncher
 {
@@ -94,8 +94,6 @@ public class SuiteRunnerLauncher
 		}
 		else
 		{
-			param.isHelp = true;
-
             runFromList(param.runnerParser);
 		}
 		
