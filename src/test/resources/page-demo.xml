@@ -6,6 +6,7 @@
 	<suren:pages pagePackage="">
 		<suren:page class="com.surenpi.autotest.demo.Hello" url="http://baidu.com">
 			<suren:field name="name" type="input" byId="kw" data="surenpi" />
+			<suren:field name="news" type="button" byLinkText="新闻" />
 		</suren:page>
 		<suren:page class="com.surenpi.autotest.demo.Gril">
 			<suren:field name="name" type="button" />

@@ -10,6 +10,8 @@ public class SuiteRunnerLauncherTest
     @Test
     public void runners() throws IOException
     {
-        SuiteRunnerLauncher.main(new String[]{"-runners", "target/test-classes/test.xml"});
+        SuiteRunnerLauncher.main(new String[]{
+                "-runners",
+                "target/test-classes/test.xml"});
     }
 }

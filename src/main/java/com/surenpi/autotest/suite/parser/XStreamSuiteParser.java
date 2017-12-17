@@ -37,6 +37,7 @@ public class XStreamSuiteParser implements SuiteParser
         xStream.aliasField("class", SuitePage.class, "pageCls");
         xStream.useAttributeFor(SuitePage.class, "pageCls");
         xStream.aliasField("actions", SuitePage.class, "actionList");
+        xStream.useAttributeFor(SuitePage.class, "repeat");
 
         xStream.alias("action", SuiteAction.class);
         xStream.useAttributeFor(SuiteAction.class, "field");

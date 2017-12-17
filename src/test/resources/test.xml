@@ -5,7 +5,7 @@
      pageConfig="page-demo.xml" pagePackage="" rows="1" afterSleep="3000">
     <suren:pages>
         <suren:page class="com.surenpi.autotest.demo.Hello">
-            <suren:actions>
+            <suren:actions repeat="1">
                 <suren:action field="name" name="fillValue"></suren:action>
             </suren:actions>
         </suren:page>
